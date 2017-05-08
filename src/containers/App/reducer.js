@@ -8,7 +8,7 @@ import {
 const initialState = fromJS( {
   tableHeaders  : TABLE_HEADERS,
   songs         : SONGS,
-  incrementSort : false
+  incrementSort : true
 } );
 
 function AppReducer ( state = initialState, action ) {
@@ -19,8 +19,8 @@ function AppReducer ( state = initialState, action ) {
         .set( 'songs', state.get( 'songs' )
           .sort( ( prev, next ) => {
             const isIncrement = state.get( 'incrementSort' );
-            const increment   = prev.get( action.header ).toString().localeCompare( next.get( action.header ).toString() );
-            const decrement   = next.get( action.header ).toString().localeCompare( prev.get( action.header ).toString() );
+            const increment   = next.get( action.header ).toString().localeCompare( prev.get( action.header ).toString() );
+            const decrement   = prev.get( action.header ).toString().localeCompare( next.get( action.header ).toString() );
 
             return isIncrement ? increment : decrement;
           } ) );

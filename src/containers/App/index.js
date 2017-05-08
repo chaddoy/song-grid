@@ -19,7 +19,7 @@ const Header = styled.div`
   margin: auto;
   width: 1024px;
   padding: 10px;
-  color: #485658;
+  color: white;
 `;
 
 const Content = styled.div`
@@ -31,7 +31,6 @@ const Content = styled.div`
 const TableWrapper = styled.div`
   overflow: scroll;
   height: 600px;
-  padding: 10px;
 `
 
 class App extends Component {
