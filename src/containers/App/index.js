@@ -57,7 +57,7 @@ class App extends Component {
 
         <Content>
           <TableWrapper>
-            <Table collapsing>
+            <Table collapsing striped sortable size="small" singleLine padded>
               <Table.Header>
                 <Table.Row>
                   {_.map( this.props.tableHeaders, ( header ) => (
