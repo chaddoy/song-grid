@@ -8,9 +8,10 @@ class TableFilter extends Component {
     super( props );
 
     this.state = {
-      filters : [],
-      options : [],
-      header  : 'Title'
+      filters    : [],
+      options    : [],
+      header     : 'Title',
+      searchText : ''
     };
 
     this.renderDropdown   = this.renderDropdown.bind( this );
@@ -31,8 +32,7 @@ class TableFilter extends Component {
     this.setState( {
       header : data.value
     } );
-
-    _.debounce( () => this.props.handleFilter( this.state.header, data.value ), 200 );
+    this.props.handleFilter( data.value, this.state.searchText );
   }
 
   renderDropdown () {
@@ -41,6 +41,7 @@ class TableFilter extends Component {
         value={this.state.header}
         options={this.state.options}
         onChange={this.onDropdownChange}
+        search
       />
     );
   }
@@ -52,7 +53,10 @@ class TableFilter extends Component {
         labelPosition="left"
         placeholder="Search a song"
         fluid
-        onChange={( event, data ) => this.props.handleFilter( this.state.header, data.value )}
+        onChange={( event, data ) => {
+          this.props.handleFilter( this.state.header, data.value );
+          this.setState( { searchText : data.value } );
+        }}
       />
     );
   }
