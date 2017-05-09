@@ -1,4 +1,5 @@
-export const SORT_SONGS = 'App/SORT_SONGS'
+export const SORT_SONGS   = 'App/SORT_SONGS'
+export const FILTER_SONGS = 'App/FILTER_SONGS'
 
 export const TABLE_HEADERS = [
   'Title',

@@ -1,5 +1,6 @@
 import {
-	SORT_SONGS
+	SORT_SONGS,
+	FILTER_SONGS
 } from './constants';
 
 export function sortSongs ( header ) {
@@ -7,4 +8,12 @@ export function sortSongs ( header ) {
 		type : SORT_SONGS,
     header
 	};
+}
+
+export function filterSongs ( searchKey, searchText ) {
+	return {
+		type : FILTER_SONGS,
+		searchKey,
+		searchText
+	}
 }

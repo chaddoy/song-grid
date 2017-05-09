@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import styled from 'styled-components';
-import { Table } from 'semantic-ui-react';
-import { Icon } from 'semantic-ui-react';
+import { Table, Icon, Grid } from 'semantic-ui-react';
 
-import { sortSongs } from './actions';
+import TableFilter from '../../components/TableFilter';
+import { sortSongs, filterSongs } from './actions';
 import { selectTableHeaders, selectSongs, selectIncrementSort } from './selectors';
 
 const HeaderWrapper = styled.div`
@@ -39,7 +39,19 @@ class App extends Component {
       <div>
         <HeaderWrapper>
           <Header>
-            <h1>song-grid</h1>
+            <Grid divided="vertically">
+              <Grid.Row>
+                <Grid.Column width="11" style={{ marginBottom : '0px' }}>
+                  <h1>song-grid</h1>
+                </Grid.Column>
+                <Grid.Column width="5" style={{ marginBottom : '0px' }}>
+                  <TableFilter
+                    headers={this.props.tableHeaders}
+                    handleFilter={this.props.onSongFilter}
+                  />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
           </Header>
         </HeaderWrapper>
 
@@ -68,6 +80,16 @@ class App extends Component {
                     ) )}
                   </Table.Row>
                 ) )}
+                {!( this.props.songs || [] ).length ? (
+                  <Table.Row>
+                    <Table.Cell
+                      colSpan={this.props.tableHeaders.length}
+                      style={{ textAlign : 'center' }}
+                    >
+                      No results found.
+                    </Table.Cell>
+                  </Table.Row>
+                ) : null}
               </Table.Body>
             </Table>
           </TableWrapper>
@@ -81,6 +103,7 @@ App.propTypes = {
   tableHeaders    : PropTypes.array.isRequired,
   songs           : PropTypes.array.isRequired,
   handleSort      : PropTypes.func.isRequired,
+  onSongFilter    : PropTypes.func.isRequired,
   isIncrementSort : PropTypes.bool.isRequired
 };
 
@@ -93,7 +116,8 @@ const mapStateToProps = createStructuredSelector( {
 
 function mapDispatchToProps ( dispatch ) {
   return {
-    handleSort : ( header ) => dispatch( sortSongs( header ) )
+    handleSort   : ( header ) => dispatch( sortSongs( header ) ),
+    onSongFilter : _.debounce( ( searchKey, searchText ) => dispatch( filterSongs( searchKey, searchText ) ), 200 )
   };
 }
 
